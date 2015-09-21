@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ZBrad.NLogEtw</id>
+    <version>1.0.0-beta</version>
+    <title>ZBrad's NLog to Etw event logging</title>
+    <authors>zbrad</authors>
+    <owners>zbrad</owners>
+    <licenseUrl>https://github.com/zbrad/NLogEtw/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/zbrad/NLogEtw</projectUrl>
+    <iconUrl>https://github.com/zbrad/NLogEtw/ZBrad.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>
+      ZBrad's NLog to Etw event logging
+    </summary>
+    <description>
+      Enables nlog events in Etw
+    </description>
+    <releaseNotes></releaseNotes>
+    <copyright>Brad Merrill 2015</copyright>
+    <tags>NLog</tags>
+    <dependencies>
+      <dependency id="NLog" version="4.1" />
+      <dependency id="Microsoft.Diagnostics.Tracing.EventSource.Redist" version="1.1.25" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="*.dll" target="lib\net45" />
+  </files>
+</package>
