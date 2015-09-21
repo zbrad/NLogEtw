@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NLog;
 using NLog.Targets;
-using Microsoft.Diagnostics.Tracing;
+using System.Diagnostics.Tracing;
 
 namespace ZBrad.NLogEtw
 {

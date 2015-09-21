@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Diagnostics.Tracing;
+using System.Diagnostics.Tracing;
 using NLog;
 
 namespace ZBrad.NLogEtw
