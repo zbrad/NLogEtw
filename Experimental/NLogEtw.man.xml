@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<instrumentationManifest xsi:schemaLocation="http://schemas.microsoft.com/win/2004/08/events eventman.xsd" xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:trace="http://schemas.microsoft.com/win/2004/08/events/trace">
+  <instrumentation
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <!-- note: symbol containing period '.' or dash '-' is illegal -->
+      <provider name="NLogSource"
+                guid="{providerGuid}"
+                symbol="NLogSource"
+                resourceFileName="c:\temp\NLogEtw\NLogEtw.dll"
+                messageFileName="c:\temp\NLogEtw\NLogEtw.dll">
+
+        <events>
+          <event value="0" symbol="LogAlways"      version="1" level="win:LogAlways"     message="$(string.NLogEtw.message)" template="NLogArgs" />
+          <event value="1" symbol="Verbose"        version="1" level="win:Verbose"       message="$(string.NLogEtw.message)" template="NLogArgs" />
+          <event value="2" symbol="Informational"  version="1" level="win:Informational" message="$(string.NLogEtw.message)" template="NLogArgs" />
+          <event value="3" symbol="Warning"        version="1" level="win:Warning"       message="$(string.NLogEtw.message)" template="NLogArgs" />
+          <event value="4" symbol="Error"          version="1" level="win:Error"         message="$(string.NLogEtw.message)" template="NLogArgs" />
+          <event value="5" symbol="Critical"       version="1" level="win:Critical"      message="$(string.NLogEtw.message)" template="NLogArgs" />
+        </events>
+        
+        <levels>
+        </levels>
+
+        <templates>
+          <template tid="NLogArgs">
+            <data name="Message" inType="win:UnicodeString">         
+            </data>
+          </template>      
+        </templates>
+      </provider>
+    </events>
+  </instrumentation>
+
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="level.Verbose"       value="Verbose" />
+        <string id="level.Informational" value="Information" />
+        <string id="level.Warning"       value="Warning" />
+        <string id="level.Error"         value="Error" />
+        <string id="level.Critical"      value="Critical" />
+
+        <string id="NLogEtw.message" value="%1" />
+      </stringTable>
+    </resources>
+  </localization>
+</instrumentationManifest>
