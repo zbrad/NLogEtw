@@ -80,6 +80,7 @@ namespace ZBrad.NLogEtw
             try
             {
                 addHeader(args, data);
+                addProperties(args, data);
                 addBody(args, data, opcode);
 
                 EventData* d = stackalloc EventData[args.Count];
@@ -183,20 +184,22 @@ namespace ZBrad.NLogEtw
         static void addProperties(List<GCHandle> args, LogEventInfo data)
         {
             if (data.Properties == null)
+            {
+                args.Add(gcAlloc(string.Empty));
                 return;
+            }
 
             // add any properties
+            StringBuilder sb = new StringBuilder();
             foreach (var kv in data.Properties)
             {
-                StringBuilder sb = new StringBuilder();
                 sb.Append(kv.Key);
                 sb.Append('=');
                 sb.Append(kv.Value);
-
-                var s = sb.ToString();
-                var p = gcAlloc(s);
-                args.Add(p);
+                sb.Append('\n');
             }
+
+            args.Add(gcAlloc(sb.ToString()));
         }
 
         unsafe static void addEventData(EventData* d, List<GCHandle> args)
@@ -229,7 +232,8 @@ namespace ZBrad.NLogEtw
                 string message,
                 string logger,
                 int sequence,
-                string timestamp
+                string timestamp,
+                string properties
                 )
         {
 
@@ -241,18 +245,20 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 string stack
                 )
         {
 
         }
 
-        [Event(EventIds.Trace_Exception, Task = Tasks.Trace, Opcode = Opcodes.Exception, Level = EventLevel.LogAlways, Message = "{0}: Exception: {5}:{6}")]
+        [Event(EventIds.Trace_Exception, Task = Tasks.Trace, Opcode = Opcodes.Exception, Level = EventLevel.LogAlways, Message = "{0}: Exception: {6}:{7}")]
         public void Trace_Exception(
                 string message,
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 int exceptionHResult,
                 string exceptionType,
                 string exceptionMessage
@@ -266,7 +272,8 @@ namespace ZBrad.NLogEtw
                 string message,
                 string logger,
                 int sequence,
-                string timestamp
+                string timestamp,
+                string properties
                 )
         {
 
@@ -278,18 +285,20 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 string stack
                 )
         {
 
         }
 
-        [Event(EventIds.Debug_Exception, Task = Tasks.Debug, Opcode = Opcodes.Exception, Level = EventLevel.Verbose, Message = "{0}: Exception: {5}:{6}")]
+        [Event(EventIds.Debug_Exception, Task = Tasks.Debug, Opcode = Opcodes.Exception, Level = EventLevel.Verbose, Message = "{0}: Exception: {6}:{7}")]
         public void Debug_Exception(
                 string message,
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 int exceptionHResult,
                 string exceptionType,
                 string exceptionMessage
@@ -303,7 +312,8 @@ namespace ZBrad.NLogEtw
                 string message,
                 string logger,
                 int sequence,
-                string timestamp
+                string timestamp,
+                string properties
                 )
         {
 
@@ -315,18 +325,20 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 string stack
                 )
         {
 
         }
 
-        [Event(EventIds.Info_Exception, Task = Tasks.Info, Opcode = Opcodes.Exception, Level = EventLevel.Informational, Message = "{0}: Exception: {5}:{6}")]
+        [Event(EventIds.Info_Exception, Task = Tasks.Info, Opcode = Opcodes.Exception, Level = EventLevel.Informational, Message = "{0}: Exception: {6}:{7}")]
         public void Info_Exception(
                 string message,
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 int exceptionHResult,
                 string exceptionType,
                 string exceptionMessage
@@ -340,7 +352,8 @@ namespace ZBrad.NLogEtw
                 string message,
                 string logger,
                 int sequence,
-                string timestamp
+                string timestamp,
+                string properties
                 )
         {
 
@@ -352,18 +365,20 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 string stack
                 )
         {
 
         }
 
-        [Event(EventIds.Warn_Exception, Task = Tasks.Warn, Opcode = Opcodes.Exception, Level = EventLevel.Warning, Message = "{0}: Exception: {5}:{6}")]
+        [Event(EventIds.Warn_Exception, Task = Tasks.Warn, Opcode = Opcodes.Exception, Level = EventLevel.Warning, Message = "{0}: Exception: {6}:{7}")]
         public void Warn_Exception(
                 string message,
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties, 
                 int exceptionHResult,
                 string exceptionType,
                 string exceptionMessage
@@ -377,7 +392,8 @@ namespace ZBrad.NLogEtw
                 string message,
                 string logger,
                 int sequence,
-                string timestamp
+                string timestamp,
+                string properties
                 )
         {
 
@@ -389,18 +405,20 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 string stack
                 )
         {
 
         }
 
-        [Event(EventIds.Error_Exception, Task = Tasks.Error, Opcode = Opcodes.Exception, Level = EventLevel.Error, Message = "{0}: Exception: {5}:{6}")]
+        [Event(EventIds.Error_Exception, Task = Tasks.Error, Opcode = Opcodes.Exception, Level = EventLevel.Error, Message = "{0}: Exception: {6}:{7}")]
         public void Error_Exception(
                 string message,
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 int exceptionHResult,
                 string exceptionType,
                 string exceptionMessage
@@ -414,7 +432,8 @@ namespace ZBrad.NLogEtw
                 string message,
                 string logger,
                 int sequence,
-                string timestamp
+                string timestamp,
+                string properties
                 )
         {
 
@@ -426,18 +445,20 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 string stack
                 )
         {
 
         }
 
-        [Event(EventIds.Fatal_Exception, Task = Tasks.Fatal, Opcode = Opcodes.Exception, Level = EventLevel.Critical, Message = "{0}: Exception: {5}:{6}")]
+        [Event(EventIds.Fatal_Exception, Task = Tasks.Fatal, Opcode = Opcodes.Exception, Level = EventLevel.Critical, Message = "{0}: Exception: {6}:{7}")]
         public void Fatal_Exception(
                 string message,
                 string logger,
                 int sequence,
                 string timestamp,
+                string properties,
                 int exceptionHResult,
                 string exceptionType,
                 string exceptionMessage
