@@ -74,39 +74,31 @@ namespace ZBrad.NLogEtw
         public unsafe void EtwWrite(LogEventInfo data)
         {
             var opcode = getOpcode(data);
+            var eventId = getId(data, opcode);
             var args = new List<GCHandle>();
 
             try
             {
                 addHeader(args, data);
-                addProperties(args, data);
-
-                switch (opcode)
-                {
-                    case Opcodes.Exception:
-                        addException(args, data);
-                        break;
-                    case Opcodes.Stack:
-                        addStack(args, data);
-                        break;
-                    default:
-                        break;
-                }
+                addBody(args, data, opcode);
 
                 EventData* d = stackalloc EventData[args.Count];
                 addEventData(d, args);
-
-                var eventId = getId(data, opcode);
                 WriteEventCore(eventId, args.Count, d);
             }
             finally
             {
-                foreach (var p in args)
-                    p.Free();
+                freeArgs(args);
             }
         }
 
-        int getId(LogEventInfo data, EventOpcode opcode)
+        static void freeArgs(List<GCHandle> args)
+        {
+            foreach (var p in args)
+                p.Free();
+        }
+
+        static int getId(LogEventInfo data, EventOpcode opcode)
         {
             var level = (int)levels[data.Level];
             var code = (int)opcode;
@@ -127,27 +119,64 @@ namespace ZBrad.NLogEtw
             return Opcodes.Basic;
         }
 
+        static GCHandle gcAlloc(string s)
+        {
+            return GCHandle.Alloc(s, GCHandleType.Pinned);
+        }
+
+        static GCHandle gcAlloc(int i)
+        { 
+            return GCHandle.Alloc(i, GCHandleType.Pinned);
+        }
+
+        static GCHandle gcAlloc(DateTime d)
+        {
+            var s = d.ToString("o");
+            return gcAlloc(s);
+        }
+
         static void addHeader(List<GCHandle> args, LogEventInfo data)
         {
-            args.Add(GCHandle.Alloc(data.FormattedMessage, GCHandleType.Pinned));
-            args.Add(GCHandle.Alloc(data.LoggerName, GCHandleType.Pinned));
-            args.Add(GCHandle.Alloc(data.SequenceID, GCHandleType.Pinned));
-            args.Add(GCHandle.Alloc(data.TimeStamp.ToString("o"), GCHandleType.Pinned));
+            //  string message,
+            //  string logger,
+            //  int sequence,
+            //  string timestamp
+
+            args.Add(gcAlloc(data.FormattedMessage));
+            args.Add(gcAlloc(data.LoggerName));
+            args.Add(gcAlloc(data.SequenceID));
+            args.Add(gcAlloc(data.TimeStamp));
+        }
+
+        static void addBody(List<GCHandle> args, LogEventInfo data, EventOpcode opcode)
+        {
+            switch (opcode)
+            {
+                case Opcodes.Exception:
+                    addException(args, data);
+                    return;
+                case Opcodes.Stack:
+                    addStack(args, data);
+                    return;
+                default:
+                    return;
+            }
         }
 
         static void addException(List<GCHandle> args, LogEventInfo data)
         {
-            // int hresult,
-            // string type,
+            // int exceptionHResult,
+            // string exceptionType,
             // string exceptionMessage
-            args.Add(GCHandle.Alloc(data.Exception.HResult, GCHandleType.Pinned));
-            args.Add(GCHandle.Alloc(data.Exception.GetType().Name, GCHandleType.Pinned));
-            args.Add(GCHandle.Alloc(data.Exception.Message, GCHandleType.Pinned));
+
+            args.Add(gcAlloc(data.Exception.HResult));
+            args.Add(gcAlloc(data.Exception.GetType().Name));
+            args.Add(gcAlloc(data.Exception.Message));
         }
 
         static void addStack(List<GCHandle> args, LogEventInfo data)
         {
-            args.Add(GCHandle.Alloc(data.StackTrace.ToString()));
+            args.Add(gcAlloc(data.StackTrace.ToString()));
         }
 
 
@@ -165,7 +194,7 @@ namespace ZBrad.NLogEtw
                 sb.Append(kv.Value);
 
                 var s = sb.ToString();
-                var p = GCHandle.Alloc(s, GCHandleType.Pinned);
+                var p = gcAlloc(s);
                 args.Add(p);
             }
         }
@@ -175,7 +204,12 @@ namespace ZBrad.NLogEtw
             for (var i = 0; i < args.Count; i++)
             {
                 d[i].DataPointer = args[i].AddrOfPinnedObject();
-                d[i].Size = 4;
+                if (args[i].Target is string)
+                    d[i].Size = (((string)args[i].Target).Length + 1) * 2;  // size in bytes (include null terminator)
+                else if (args[i].Target is int)
+                    d[i].Size = 4;
+                else
+                    throw new ApplicationException("unhandled pinned data size");
             }
         }
 
@@ -219,8 +253,8 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
-                int hresult,
-                string type,
+                int exceptionHResult,
+                string exceptionType,
                 string exceptionMessage
                 )
         {
@@ -256,8 +290,8 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
-                int hresult,
-                string type,
+                int exceptionHResult,
+                string exceptionType,
                 string exceptionMessage
                 )
         {
@@ -293,8 +327,8 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
-                int hresult,
-                string type,
+                int exceptionHResult,
+                string exceptionType,
                 string exceptionMessage
                 )
         {
@@ -330,8 +364,8 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
-                int hresult,
-                string type,
+                int exceptionHResult,
+                string exceptionType,
                 string exceptionMessage
             )
         {
@@ -367,8 +401,8 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
-                int hresult,
-                string type,
+                int exceptionHResult,
+                string exceptionType,
                 string exceptionMessage
                 )
         {
@@ -404,8 +438,8 @@ namespace ZBrad.NLogEtw
                 string logger,
                 int sequence,
                 string timestamp,
-                int hresult,
-                string type,
+                int exceptionHResult,
+                string exceptionType,
                 string exceptionMessage
                 )
         {
