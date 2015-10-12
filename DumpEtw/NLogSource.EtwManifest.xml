@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<instrumentationManifest xmlns="http://schemas.microsoft.com/win/2004/08/events">
+  <instrumentation xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider name="NLog" guid="{a5e61154-86f6-5ae7-f81e-2823adf7e7e2}" resourceFileName="H:\Repos\NLogEtw\DumpEtw\bin\Debug\NLogEtw.dll" messageFileName="H:\Repos\NLogEtw\DumpEtw\bin\Debug\NLogEtw.dll" symbol="NLog">
+        <tasks>
+          <task name="Trace" message="$(string.task_Trace)" value="1000"/>
+          <task name="Debug" message="$(string.task_Debug)" value="2000"/>
+          <task name="Info" message="$(string.task_Info)" value="3000"/>
+          <task name="Warn" message="$(string.task_Warn)" value="4000"/>
+          <task name="Error" message="$(string.task_Error)" value="5000"/>
+          <task name="Fatal" message="$(string.task_Fatal)" value="6000"/>
+          <task name="EventSourceMessage" message="$(string.task_EventSourceMessage)" value="65534"/>
+        </tasks>
+        <opcodes>
+          <opcode name="Basic" message="$(string.opcode_Basic)" value="101"/>
+          <opcode name="Stack" message="$(string.opcode_Stack)" value="102"/>
+          <opcode name="Exception" message="$(string.opcode_Exception)" value="103"/>
+        </opcodes>
+        <keywords>
+          <keyword name="Session3" message="$(string.keyword_Session3)" mask="0x100000000000"/>
+          <keyword name="Session2" message="$(string.keyword_Session2)" mask="0x200000000000"/>
+          <keyword name="Session1" message="$(string.keyword_Session1)" mask="0x400000000000"/>
+          <keyword name="Session0" message="$(string.keyword_Session0)" mask="0x800000000000"/>
+        </keywords>
+        <events>
+          <event value="0" version="0" level="win:LogAlways" symbol="EventSourceMessage" task="EventSourceMessage" template="EventSourceMessageArgs"/>
+          <event value="1101" version="0" level="win:LogAlways" symbol="Trace" message="$(string.event_Trace)" opcode="Basic" task="Trace" template="TraceArgs"/>
+          <event value="1102" version="0" level="win:LogAlways" symbol="Trace_Stack" message="$(string.event_Trace_Stack)" opcode="Stack" task="Trace" template="Trace_StackArgs"/>
+          <event value="1103" version="0" level="win:LogAlways" symbol="Trace_Exception" message="$(string.event_Trace_Exception)" opcode="Exception" task="Trace" template="Trace_ExceptionArgs"/>
+          <event value="2101" version="0" level="win:Verbose" symbol="Debug" message="$(string.event_Debug)" opcode="Basic" task="Debug" template="DebugArgs"/>
+          <event value="2102" version="0" level="win:Verbose" symbol="Debug_Stack" message="$(string.event_Debug_Stack)" opcode="Stack" task="Debug" template="Debug_StackArgs"/>
+          <event value="2103" version="0" level="win:Verbose" symbol="Debug_Exception" message="$(string.event_Debug_Exception)" opcode="Exception" task="Debug" template="Debug_ExceptionArgs"/>
+          <event value="3101" version="0" level="win:Informational" symbol="Info" opcode="Basic" task="Info" template="InfoArgs"/>
+          <event value="3102" version="0" level="win:Informational" symbol="Info_Stack" message="$(string.event_Info_Stack)" opcode="Stack" task="Info" template="Info_StackArgs"/>
+          <event value="3103" version="0" level="win:Informational" symbol="Info_Exception" message="$(string.event_Info_Exception)" opcode="Exception" task="Info" template="Info_ExceptionArgs"/>
+          <event value="4101" version="0" level="win:Warning" symbol="Warn" message="$(string.event_Warn)" opcode="Basic" task="Warn" template="WarnArgs"/>
+          <event value="4102" version="0" level="win:Warning" symbol="Warn_Stack" message="$(string.event_Warn_Stack)" opcode="Stack" task="Warn" template="Warn_StackArgs"/>
+          <event value="4103" version="0" level="win:Warning" symbol="Warn_Exception" message="$(string.event_Warn_Exception)" opcode="Exception" task="Warn" template="Warn_ExceptionArgs"/>
+          <event value="5101" version="0" level="win:Error" symbol="Error" message="$(string.event_Error)" opcode="Basic" task="Error" template="ErrorArgs"/>
+          <event value="5102" version="0" level="win:Error" symbol="Error_Stack" message="$(string.event_Error_Stack)" opcode="Stack" task="Error" template="Error_StackArgs"/>
+          <event value="5103" version="0" level="win:Error" symbol="Error_Exception" message="$(string.event_Error_Exception)" opcode="Exception" task="Error" template="Error_ExceptionArgs"/>
+          <event value="6101" version="0" level="win:Critical" symbol="Fatal" message="$(string.event_Fatal)" opcode="Basic" task="Fatal" template="FatalArgs"/>
+          <event value="6102" version="0" level="win:Critical" symbol="Fatal_Stack" message="$(string.event_Fatal_Stack)" opcode="Stack" task="Fatal" template="Fatal_StackArgs"/>
+          <event value="6103" version="0" level="win:Critical" symbol="Fatal_Exception" message="$(string.event_Fatal_Exception)" opcode="Exception" task="Fatal" template="Fatal_ExceptionArgs"/>
+        </events>
+        <templates>
+          <template tid="EventSourceMessageArgs">
+            <data name="message" inType="win:UnicodeString"/>
+          </template>
+          <template tid="TraceArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Trace_StackArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="stack" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Trace_ExceptionArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="hresult" inType="win:Int32"/>
+            <data name="exceptionType" inType="win:UnicodeString"/>
+            <data name="exceptionMessage" inType="win:UnicodeString"/>
+          </template>
+          <template tid="DebugArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Debug_StackArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="stack" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Debug_ExceptionArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="hresult" inType="win:Int32"/>
+            <data name="exceptionType" inType="win:UnicodeString"/>
+            <data name="exceptionMessage" inType="win:UnicodeString"/>
+          </template>
+          <template tid="InfoArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Info_StackArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="stack" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Info_ExceptionArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="hresult" inType="win:Int32"/>
+            <data name="exceptionType" inType="win:UnicodeString"/>
+            <data name="exceptionMessage" inType="win:UnicodeString"/>
+          </template>
+          <template tid="WarnArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Warn_StackArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="stack" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Warn_ExceptionArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="hresult" inType="win:Int32"/>
+            <data name="exceptionType" inType="win:UnicodeString"/>
+            <data name="exceptionMessage" inType="win:UnicodeString"/>
+          </template>
+          <template tid="ErrorArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Error_StackArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="stack" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Error_ExceptionArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="hresult" inType="win:Int32"/>
+            <data name="exceptionType" inType="win:UnicodeString"/>
+            <data name="exceptionMessage" inType="win:UnicodeString"/>
+          </template>
+          <template tid="FatalArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Fatal_StackArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="stack" inType="win:UnicodeString"/>
+          </template>
+          <template tid="Fatal_ExceptionArgs">
+            <data name="message" inType="win:UnicodeString"/>
+            <data name="logger" inType="win:UnicodeString"/>
+            <data name="sequence" inType="win:Int32"/>
+            <data name="timestamp" inType="win:UnicodeString"/>
+            <data name="hresult" inType="win:Int32"/>
+            <data name="exceptionType" inType="win:UnicodeString"/>
+            <data name="exceptionMessage" inType="win:UnicodeString"/>
+          </template>
+        </templates>
+      </provider>
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="event_Debug" value="%1"/>
+        <string id="event_Debug_Exception" value="%1: Exception: %6:%7"/>
+        <string id="event_Debug_Stack" value="%1"/>
+        <string id="event_Error" value="%1"/>
+        <string id="event_Error_Exception" value="%1: Exception: %6:%7"/>
+        <string id="event_Error_Stack" value="%1"/>
+        <string id="event_Fatal" value="%1"/>
+        <string id="event_Fatal_Exception" value="%1: Exception: %6:%7"/>
+        <string id="event_Fatal_Stack" value="%1"/>
+        <string id="event_Info_Exception" value="%1: Exception: %6:%7"/>
+        <string id="event_Info_Stack" value="%1"/>
+        <string id="event_Trace" value="%1"/>
+        <string id="event_Trace_Exception" value="%1: Exception: %6:%7"/>
+        <string id="event_Trace_Stack" value="%1"/>
+        <string id="event_Warn" value="%1"/>
+        <string id="event_Warn_Exception" value="%1: Exception: %6:%7"/>
+        <string id="event_Warn_Stack" value="%1"/>
+        <string id="keyword_Session0" value="Session0"/>
+        <string id="keyword_Session1" value="Session1"/>
+        <string id="keyword_Session2" value="Session2"/>
+        <string id="keyword_Session3" value="Session3"/>
+        <string id="opcode_Basic" value="Basic"/>
+        <string id="opcode_Exception" value="Exception"/>
+        <string id="opcode_Stack" value="Stack"/>
+        <string id="task_Debug" value="Debug"/>
+        <string id="task_Error" value="Error"/>
+        <string id="task_EventSourceMessage" value="EventSourceMessage"/>
+        <string id="task_Fatal" value="Fatal"/>
+        <string id="task_Info" value="Info"/>
+        <string id="task_Trace" value="Trace"/>
+        <string id="task_Warn" value="Warn"/>
+      </stringTable>
+    </resources>
+  </localization>
+</instrumentationManifest>
