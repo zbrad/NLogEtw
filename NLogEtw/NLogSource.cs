@@ -58,17 +58,15 @@ namespace ZBrad.NLogEtw
 
         }
 
-        static Dictionary<LogLevel, EventTask> levels;
-        static NLogSource()
+        private static readonly Dictionary<LogLevel, EventTask> Levels = new Dictionary<LogLevel, EventTask>
         {
-            levels = new Dictionary<LogLevel, EventTask>();
-            levels.Add(LogLevel.Trace, Tasks.Trace);
-            levels.Add(LogLevel.Debug, Tasks.Debug);
-            levels.Add(LogLevel.Info, Tasks.Info);
-            levels.Add(LogLevel.Warn, Tasks.Warn);
-            levels.Add(LogLevel.Error, Tasks.Error);
-            levels.Add(LogLevel.Fatal, Tasks.Fatal);
-        }
+            {LogLevel.Trace, Tasks.Trace},
+            {LogLevel.Debug, Tasks.Debug},
+            {LogLevel.Info, Tasks.Info},
+            {LogLevel.Warn, Tasks.Warn},
+            {LogLevel.Error, Tasks.Error},
+            {LogLevel.Fatal, Tasks.Fatal}
+        };
 
         [NonEvent]
         public unsafe void EtwWrite(LogEventInfo data)
@@ -101,7 +99,7 @@ namespace ZBrad.NLogEtw
 
         static int getId(LogEventInfo data, EventOpcode opcode)
         {
-            var level = (int)levels[data.Level];
+            var level = (int)Levels[data.Level];
             var code = (int)opcode;
             return level + code;
         }
