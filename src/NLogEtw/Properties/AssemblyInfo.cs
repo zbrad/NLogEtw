@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Docs")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ZBrad's NLog to Etw event logging")]
+[assembly: AssemblyDescription(@"This component create an NLog Target which raises equivalent events in Etw")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Docs")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("Brad Merrill")]
+[assembly: AssemblyProduct("NLogEtw")]
+[assembly: AssemblyCopyright("Copyright Brad Merrill ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2d205d0c-1616-470e-91bb-d4205feed734")]
+[assembly: Guid("b1d139b8-f3d9-4711-96bc-d526f602b4b8")]
 
 // Version information for an assembly consists of the following four values:
 //
