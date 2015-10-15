@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.0-beta</version>
+    <title>ZBrad's NLog to Etw event logging</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://github.com/zbrad/NLogEtw/LICENSE</licenseUrl>
+    <projectUrl>http://github.com/zbrad/NLogEtw</projectUrl>
+    <iconUrl>http://github.com/zbrad/NLogEtw/ZBrad.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>$title$</summary>
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>NLog</tags>
+  </metadata>
+</package>
