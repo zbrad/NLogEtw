@@ -13,6 +13,8 @@ namespace ZBrad.NLogEtw
     [EventSource(Name = "NLog")]
     internal sealed class NLogSource : EventSource
     {
+        #region tasks, opcodes, and event IDs
+
         public class Tasks
         {
             public const EventTask Trace = (EventTask)1000;
@@ -58,6 +60,8 @@ namespace ZBrad.NLogEtw
 
         }
 
+        #endregion
+
         static Dictionary<LogLevel, EventTask> levels;
         static NLogSource()
         {
@@ -92,6 +96,13 @@ namespace ZBrad.NLogEtw
                 freeArgs(args);
             }
         }
+
+        public static string GetManifest()
+        {
+            return EventSource.GenerateManifest(typeof(NLogSource), Assembly.GetExecutingAssembly().FullName);
+        }
+
+        #region private static helpers
 
         static void freeArgs(List<GCHandle> args)
         {
@@ -180,7 +191,6 @@ namespace ZBrad.NLogEtw
             args.Add(gcAlloc(data.StackTrace.ToString()));
         }
 
-
         static void addProperties(List<GCHandle> args, LogEventInfo data)
         {
             if (data.Properties == null)
@@ -202,7 +212,7 @@ namespace ZBrad.NLogEtw
             args.Add(gcAlloc(sb.ToString()));
         }
 
-        unsafe static void addEventData(EventData* d, List<GCHandle> args)
+        static unsafe void addEventData(EventData* d, List<GCHandle> args)
         {
             for (var i = 0; i < args.Count; i++)
             {
@@ -216,16 +226,9 @@ namespace ZBrad.NLogEtw
             }
         }
 
-        [NonEvent]
-        static unsafe void addData(ref EventData* dp, char* data)
-        {
-            if (data != null)
-            {
-                (*dp).DataPointer = (IntPtr)data;
-                (*dp).Size = 4;
-                dp++;
-            }
-        }
+        #endregion
+
+        #region event source events
 
         [Event(EventIds.Trace_Basic, Task = Tasks.Trace, Opcode = Opcodes.Basic, Level = EventLevel.LogAlways, Message = "{0}")]
         public void Trace(
@@ -467,10 +470,7 @@ namespace ZBrad.NLogEtw
 
         }
 
-        [NonEvent]
-        public static string GetManifest()
-        {
-            return EventSource.GenerateManifest(typeof(NLogSource), Assembly.GetExecutingAssembly().FullName);
-        }
+        #endregion
+
     }
 }

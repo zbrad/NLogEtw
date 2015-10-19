@@ -5,7 +5,17 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLogEtw", "NLogEtw\NLogEtw.csproj", "{B1D139B8-F3D9-4711-96BC-D526F602B4B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEtwConfig", "Test\TestEtwConfig.csproj", "{D9E1A785-4D02-4432-8513-FE66D16D7D34}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34F12A40-5420-454B-992D-BE36AFA3F3E7}"
+	ProjectSection(SolutionItems) = preProject
+		build.ps1 = build.ps1
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BCEF4C65-E6E3-4B60-A374-0C217EED8988}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEtwConfig", "Tests\TestEtwConfig\TestEtwConfig.csproj", "{D9E1A785-4D02-4432-8513-FE66D16D7D34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEtwPackage", "Tests\TestEtwPackage\TestEtwPackage.csproj", "{7FBC0A60-6DD7-489B-BAE8-5010E6AD7858}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +31,16 @@ Global
 		{D9E1A785-4D02-4432-8513-FE66D16D7D34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9E1A785-4D02-4432-8513-FE66D16D7D34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9E1A785-4D02-4432-8513-FE66D16D7D34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FBC0A60-6DD7-489B-BAE8-5010E6AD7858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FBC0A60-6DD7-489B-BAE8-5010E6AD7858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FBC0A60-6DD7-489B-BAE8-5010E6AD7858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FBC0A60-6DD7-489B-BAE8-5010E6AD7858}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D9E1A785-4D02-4432-8513-FE66D16D7D34} = {BCEF4C65-E6E3-4B60-A374-0C217EED8988}
+		{7FBC0A60-6DD7-489B-BAE8-5010E6AD7858} = {BCEF4C65-E6E3-4B60-A374-0C217EED8988}
 	EndGlobalSection
 EndGlobal

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Diagnostics.Tracing;
 using System.IO;
+using System.Linq;
+using Microsoft.Diagnostics.Tracing;
 
 namespace TestEtw
 {

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>1.0.0-beta</version>
+    <version>1.0.0</version>
     <title>ZBrad's NLog to Etw event logging</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
