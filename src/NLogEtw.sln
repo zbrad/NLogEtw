@@ -16,6 +16,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEtwConfig", "Tests\TestEtwConfig\TestEtwConfig.csproj", "{D9E1A785-4D02-4432-8513-FE66D16D7D34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEtwPackage", "Tests\TestEtwPackage\TestEtwPackage.csproj", "{7FBC0A60-6DD7-489B-BAE8-5010E6AD7858}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B1D139B8-F3D9-4711-96BC-D526F602B4B8} = {B1D139B8-F3D9-4711-96BC-D526F602B4B8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

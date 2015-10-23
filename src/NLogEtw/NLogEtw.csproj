@@ -63,7 +63,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell $(SolutionDir)build.ps1 "$(SolutionDir)." "$(ProjectPath)" "$(TargetDir)." $(ConfigurationName)</PostBuildEvent>
+    <PostBuildEvent>powershell -file $(SolutionDir)build.ps1 "$(SolutionDir)." "$(ProjectPath)" "$(TargetDir)." $(ConfigurationName)
+</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Diagnostics.Tracing.EventRegister.1.1.25\build\Microsoft.Diagnostics.Tracing.EventRegister.targets" Condition="Exists('..\packages\Microsoft.Diagnostics.Tracing.EventRegister.1.1.25\build\Microsoft.Diagnostics.Tracing.EventRegister.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
